@@ -17,13 +17,10 @@ int main()
         len += 1;
         num2cp = num2cp / 10;
     }
+        r = r % len;
     if (r < 0)
     {
         r = len + r ;
-    }
-    else
-    {
-        r = r % len;
     }
     int mod = pow(10, len + r);
 
