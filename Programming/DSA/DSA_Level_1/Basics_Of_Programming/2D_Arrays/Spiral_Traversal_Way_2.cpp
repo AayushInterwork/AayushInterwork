@@ -17,8 +17,9 @@ int main()
             cin >> arr[i][j];
         }
     }
+    
+    // from left --> bottom --> right --> top
 
-    int totalElements = row * col;
     int mincol = 0, minrow = 0, maxrow = row - 1, maxcol = col - 1;
     while (minrow < row && mincol < col) // Condition to terminate loops OR traverse all elements;
     {
