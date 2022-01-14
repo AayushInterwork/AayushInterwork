@@ -1,3 +1,3 @@
-        // for(int l=1;l<=stars;l++){
-        //     cout<<"*";
-        // }
+            // if(k==spaces){
+            //     cout<<"*";
+            // }
