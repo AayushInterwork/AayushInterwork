@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch Get_Substring",
+            "request": "launch",
+            "mainClass": "Java.Main.Get_Substring",
+            "projectName": "Introduction_To_Recursion_6344bee6"
+        },
+        {
             "name": "g++ - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",
