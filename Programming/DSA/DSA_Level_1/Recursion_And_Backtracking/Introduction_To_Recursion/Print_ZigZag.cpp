@@ -23,6 +23,7 @@ int main()
     cin >> n;
     pzz(n);
     cout<<endl;
+    int a =3,b=4;
 }
 
 
