@@ -17,7 +17,20 @@ app.get('/', (req, resp) => {
 })
 
 app1.get('/', (req, resp) => {
-    resp.send("<h1>Hello World 2</h1>");
+    resp.send(`you are at <b>(${req.path})</b> path`);
+    console.log('Running on Port 4001');
+})
+
+// This means optional url (?)
+app1.get('/?:userName', (req, resp) => {
+    resp.send(req.params);
+    console.log('Running on Port 4001');
+})
+
+
+// This means mandatory url (/:)
+app1.get('/:userID', (req, resp) => {
+    resp.send(req.params);
     console.log('Running on Port 4001');
 })
 

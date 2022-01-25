@@ -1,26 +1,39 @@
-var express = require('express')
-var app = express()
+var express = require('express');
+var app = express();
 
 
 
 var third = require('./third');
 
 var second = require('./second');
+const req = require('express/lib/request');
 
-const path = require('path');
+// const path = require('path');
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', function (req, res) {
-    // console.log(path);
+  console.log(req.path);
   res.send(third);
-  console.log("Done Successfully");
+  console.log("Done Successfully  ");
 })
 
 
 app.get('/about', function (req, res) {
-    // console.log(path);
+  console.log(req.path);
   res.send(second);
   console.log("Done Successfully");
+})
+
+app.post('/about3', function (req, res) {
+  console.log(req.path);
+  res.send(req.body);
+  console.log("Done Successfully ");
+})
+
+app.get("/about3", (request, response) => {
+  console.log("Path Param", request.params)
+  console.log("Query Params", request.query)
+  response.send("This is "+ request.query)
 })
 
 var server = app.listen(4000);

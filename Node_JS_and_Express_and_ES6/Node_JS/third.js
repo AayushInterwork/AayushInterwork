@@ -1,6 +1,6 @@
 third = {
     name:"Aayush",
-    designation:"Software Decveloper Trainee"
+    designation:"Software Developer Trainee"
 }
 
 module.exports = third;

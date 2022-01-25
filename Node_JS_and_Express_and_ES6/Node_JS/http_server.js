@@ -6,7 +6,7 @@ const server  = http.createServer((req,resp)=>{
     console.log(req.url);
     resp.statusCode=200;
     resp.setHeader('Content-Type','text/html');
-    resp.end('<h1>This is response<h1/>');
+    resp.end('<h1>This is response <h1/>');
 })
 
 server.listen(port , ()=>{

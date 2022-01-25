@@ -9,9 +9,8 @@
   "author": "aayush",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
-  },
-  "devDependencies": {
+    "express": "^4.17.2",
     "nodemon": "^2.0.15"
-  }
+  },
+  "devDependencies": {}
 }
