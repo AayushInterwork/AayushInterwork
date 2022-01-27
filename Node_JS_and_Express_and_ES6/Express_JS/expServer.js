@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var app1 = express();
+app.use(express.json());
+
 
 // This extracts the body element from the index.html file (body-parser)
 app.use(bodyParser.urlencoded({extended:true}));
@@ -67,6 +69,8 @@ app.post('/calculator', (req, resp) => {
     resp.send(`The Sum of ${n1} and ${n2} is ${sum}`);
     console.log('Running on Port 4000');
 })
+
+
 
 var link = 'https://jsonplaceholder.typicode.com/posts';
 
