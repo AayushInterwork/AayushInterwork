@@ -65,19 +65,21 @@ app.get('/updateSingle',(req,resp) =>{
 
 // Update Single Document Using Form
 app.post('/updateSingle', async (req, resp) => {
-    const query = req.body.name;
-    const val = req.body.name3;
+    const query = {name:req.body.name}
     const fields = req.body.name2;
-    const set = {fields:val};
-    console.log(req.body);
-    console.log(query);
-    console.log(fields);
-    console.log(val);
+    const val = req.body.name3;
+    var set = {};
+    set[fields] = val;
     console.log(set);
-    resp.send("Hello You");
-    // const finalQuery = await updateSingle(query, set);
-    // console.log(finalQuery);
-    // resp.send(finalQuery);
+    const finalQuery = await updateSingle(query, set);
+    console.log(finalQuery);
+    if(finalQuery.modifiedCount>0){
+        // resp.send(finalQuery);
+        // resp.sendFile('/getall');
+        resp.redirect(301, '/getall');
+    }else{
+        resp.send("Data Not Updated");
+    }
 })
 
 
@@ -93,7 +95,9 @@ app.post('/delete', async (req, resp) => {
     console.log(query);
     const finalQuery = await del(query);
     if (finalQuery.deletedCount > 0) {
-        resp.send(`Deleted the Document with name ${query.name}  --> ${JSON.stringify(finalQuery)}`);
+        // resp.send(`Deleted the Document with name ${query.name}  --> ${JSON.stringify(finalQuery)}`);
+        resp.redirect(301, '/getall');
+
     } else {
         resp.send("Data Does Not Exists");
     }
@@ -132,8 +136,8 @@ app.get('/databases', async (req, resp) => {
 
     // console.log(finalQuery);
     // resp.send($arr);
-    // resp.send(finalQuery.databases.forEach(i =>{`<h3>${i.name}</h3>`}));
-    resp.send(finalQuery.databases);
+    resp.send(finalQuery.databases.map(i =>i.name));
+    // resp.send(finalQuery.databases);
 });
 
 app.listen(4000);
