@@ -46,7 +46,8 @@ vector<vector<string>> display(string keypad, vector<string> options)
 
 int main()
 {
-    vector<string> options = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    // vector<string> options = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+ vector<string> options = {".;", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tu", "vwx", "yz"};
 
     string digits;
     cout << "Enter String : ";

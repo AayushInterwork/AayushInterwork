@@ -1,6 +1,6 @@
 const mongoUtil = require('./temp');
 var db;
-mongoUtil.connectToServer(function (err, db) {
+exports.client = mongoUtil.connectToServer(function (err, db) {
     if (err) {
         console.log(err);
     } else {
@@ -8,6 +8,3 @@ mongoUtil.connectToServer(function (err, db) {
         db = mongoUtil.getDb();
     }
 });
-exports.dbs = () => {
-    mongoUtil.getDb;
-} 
