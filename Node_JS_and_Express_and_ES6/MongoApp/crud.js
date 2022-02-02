@@ -59,25 +59,25 @@ app.post('/insertMany', async (req, resp) => {
 // })
 
 
-app.get('/updateSingle',(req,resp) =>{
-    resp.sendFile(__dirname+'/views/updatePage.html');
+app.get('/updateSingle', (req, resp) => {
+    resp.sendFile(__dirname + '/views/updatePage.html');
 })
 
 // Update Single Document Using Form
 app.post('/updateSingle', async (req, resp) => {
-    const query = {name:req.body.name}
+    const query = { name: req.body.name }
     const fields = req.body.name2;
     const val = req.body.name3;
     var set = {};
     set[fields] = val;
     console.log(set);
     const finalQuery = await updateSingle(query, set);
-    console.log(finalQuery);
-    if(finalQuery.modifiedCount>0){
+    // console.log(finalQuery);
+    if (finalQuery.modifiedCount > 0) {
         // resp.send(finalQuery);
         // resp.sendFile('/getall');
         resp.redirect(301, '/getall');
-    }else{
+    } else {
         resp.send("Data Not Updated , Since No Match Found");
     }
 })
@@ -90,7 +90,7 @@ app.get('/delete', (req, resp) => {
 
 
 // Deleted Data Using UserInput Using Post Method
-app.post('/delete', async (req, resp) => {
+app.post('/delete', async (req, resp, next) => {
     const query = req.body;
     console.log(query);
     const finalQuery = await del(query);
@@ -101,6 +101,7 @@ app.post('/delete', async (req, resp) => {
     } else {
         resp.send("Data Does Not Exists");
     }
+
 })
 
 
@@ -136,8 +137,22 @@ app.get('/databases', async (req, resp) => {
 
     // console.log(finalQuery);
     // resp.send($arr);
-    resp.send(finalQuery.databases.map(i =>i.name));
+    resp.send(finalQuery.databases.map(i => i.name));
     // resp.send(finalQuery.databases);
 });
+
+// Error Handling (When User Requested the URL which is not present in the defined routes(URL))
+app.all("*", (req, resp, next) => {
+    const err = new Error(`Requested URL ${req.path} not found`);
+    // resp.status(404).send(`${err.message} Error Location : Error location is ${err.stack}`);
+    err.statusCode = 404;
+    next(err);  // this will call the Error Handler written in 152 line number
+})
+
+// Error Handling using middleware
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    res.status(statusCode).send(`${err.message} Location of Error : ${err.stack}`);
+})
 
 app.listen(4000);
