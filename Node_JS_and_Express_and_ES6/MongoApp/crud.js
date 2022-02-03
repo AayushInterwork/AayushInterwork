@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 const { fin, insert, insertMany, updateSingle, del, col, dbs } = require('./connection');
 var app = express();
 app.use(express.json());
+var {transporter} = require("./mailerConfig");
 
 
 // This extracts the body element from the index.html file (body-parser)
@@ -38,6 +39,25 @@ app.post('/getparticular', async (req, resp) => {
 // Insert One Data
 app.post('/insertOne', async (req, resp) => {
     const query = req.body;
+
+// Send out Mails
+var mailOptions = {
+    from:"aayushjoshi129@gmail.com",
+    to:`${req.body.email}`,
+    subject:`Test Mail from aayushjoshi129@gmail.com to ${req.body.email}`,
+    text:`Hii ${req.body.name}!Welcome to the Joshi Project of mongoDB and Express`
+}
+
+transporter.sendMail(mailOptions,(err,info)=>{
+    if(err) {
+        console.log(err);
+    }
+    else{
+        console.log("Email Successfully Sent "+info.response);
+    }
+})
+
+
     const finalQuery = await insert(query);
     resp.send(finalQuery);
 })

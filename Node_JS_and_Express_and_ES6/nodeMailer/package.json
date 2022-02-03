@@ -1,0 +1,14 @@
+{
+  "name": "emailservices",
+  "version": "1.0.0",
+  "description": "aayushnodemailerservices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "aayush joshi",
+  "license": "ISC",
+  "dependencies": {
+    "nodemailer": "^6.7.2"
+  }
+}
