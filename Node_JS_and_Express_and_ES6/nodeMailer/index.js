@@ -1,32 +1,50 @@
 // NodeMailer used to send Emails 
-var nodemailer = require('nodemailer');
-var transport = nodemailer.createTransport({
-    service:"outlook",
-    // host: 'smtp.gmail.com',
-    // port: 465,
-    // secure: true, 
-    auth:{
-        // user:"aayushjoshi129@gmail.com",
-        // pass:"your password"
-        user:"aayush@interwork.biz",
-        pass:"Faridabad@121"
-    }
-})
+var express = require("express")
+var app = express();
+var { engine } = require('express-handlebars')
+var {transporter} = require("./mailerConfig")
 
 
 // Send out Mails
 var mailOptions = {
-    from:"aayush@interwork.biz",
-    to:"aayushj331@gmail.com",
-    subject:"Test Mail from mongoDB Express Project",
-    text:"Welcome to the Joshi Project of mongoDB and Express"
+    from: "aayushjoshi129@gmail.com",
+    to: "aayushj331@gmail.com",
+    subject: "Test Mail from mongoDB Express Project",
+    // text:"Welcome to the Joshi Project of mongoDB and Express",
+    html: ({ path: `./views/index.handlebars` })
 }
 
-transport.sendMail(mailOptions,(err,info)=>{
-    if(err) {
-        console.log(err);
-    }
-    else{
-        console.log("Email Successfully Sent "+info.response);
-    }
+// app.set("view engine","hbs");
+
+
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
+app.get('/', (req, res) => {
+    res.render('index', {
+        userName: "Aayush"
+    });
+});
+
+// app.get("/",(req,res)=>{
+//     // res.send("Hello ")
+//     res.render("index.handlebars",{
+//         userName:"Aayush"
+//     })
+// });
+
+app.get("/send", (req, res) => {
+    res.send("You are Sending Email While Loading this Page \nSending......")
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log("Email Successfully Sent " + info.response);
+        }
+    })
 })
+
+
+app.listen(4000);
