@@ -17,5 +17,6 @@ void printSS(string ques, string ans){
 int main(){
     string str;
     cin >> str;
+    cout<<endl;
     printSS(str, "");
 }
