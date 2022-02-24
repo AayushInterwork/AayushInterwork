@@ -1,9 +1,24 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var app1 = express();
+// var app1 = express();
 app.use(express.json());
+const multer = require('multer');
+const path = require('path');
 
+const fileupload = require('express-fileupload');
+
+var storage = multer.diskStorage({
+    destination : function(request,file,callback){
+        callback(null,'./uploads')
+    },
+    filename : function(req,file,callback){
+        console.log(file);
+        callback(null,file.fieldname + "-" + Date.now()+" "+path.extname(file.originalname))
+    }
+})
+
+const upload = multer({storage : storage});
 
 // This extracts the body element from the index.html file (body-parser)
 app.use(bodyParser.urlencoded({extended:true}));
@@ -18,23 +33,22 @@ app.get('/', (req, resp) => {
     console.log('Running on Port 4000');
 })
 
-app1.get('/', (req, resp) => {
-    resp.send(`you are at <b>(${req.path})</b> path`);
-    console.log('Running on Port 4001');
-})
+// app1.get('/', (req, resp) => {
+//     resp.send(`you are at <b>(${req.path})</b> path`);
+//     console.log('Running on Port 4001');
+// })
 
 // This means optional url (?)
-app1.get('/?:userName', (req, resp) => {
-    resp.send(req.params);
-    console.log('Running on Port 4001');
-})
+// app1.get('/?:userName', (req, resp) => {
+//     resp.send(req.params);
+//     console.log('Running on Port 4001');
+// })
 
 
-// This means mandatory url (/:)
-app1.get('/:userID', (req, resp) => {
-    resp.send(req.params);
-    console.log('Running on Port 4001');
-})
+// app1.get('/:userID', (req, resp) => {
+//     resp.send(req.params);
+//     console.log('Running on Port 4001');
+// })
 
 // about page
 app.get('/about', (req, resp) => {
@@ -70,9 +84,40 @@ app.post('/calculator', (req, resp) => {
     console.log('Running on Port 4000');
 })
 
+app.post('/multer',upload.single('file'),(req,res)=>{
+    res.send("Hello World 111 File Uploaded Successfully");
+})
+
+app.use(fileupload());
+
+app.post('/fileUpload',(req,res)=>{
+    console.log(req.files);
+    var file = req.files.file;
+    var filename = file.name;
+    var element = JSON.parse(req.body.FormData);
+    element.file = filename;
+    file.mv('./uploads/'+filename,(err)=>{
+        if(err){
+            res.send("Error Occured");
+        }else{
+            console.log(`\n\n`);
+            console.log(element);
+            console.log(`\n\n`);
+            res.send("File Uploaded Successfully");
+        }
+    })
+})
 
 
 var link = 'https://jsonplaceholder.typicode.com/posts';
+
+
+app.post('/reg',(req,res)=>{
+    const obj = JSON.parse(req.body.userObj);
+    console.log(req.body.userObj);
+    console.log(obj.name);
+    res.send("Hello");
+})
 
 app.get('/link',(req,resp)=>{
     console.log(link);
@@ -80,4 +125,4 @@ app.get('/link',(req,resp)=>{
 })
 
 app.listen(4000);
-app1.listen(4001);
+// app1.listen(4001);

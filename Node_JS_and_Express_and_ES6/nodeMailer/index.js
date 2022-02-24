@@ -3,6 +3,7 @@ var express = require("express")
 var app = express();
 var { engine } = require('express-handlebars');
 var { transporter } = require("./mailerConfig")
+const config = require('./config.json');
 
 // Send out Mails
 var mailOptions = {
@@ -40,7 +41,7 @@ app.get('/', (req, res) => {
 
 app.get("/sendindex1", (req, res) => {
     res.send("You are Sending Email Index1 While Loading this Page \nSending......")
-    mailOptions.html.path = (mailOptions.html.path + "index.handlebars");
+    mailOptions.html.path = (config.path + "index.handlebars");
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
             console.log(err);
