@@ -13,7 +13,7 @@ var storage = multer.diskStorage({
         callback(null,'./uploads')
     },
     filename : function(req,file,callback){
-        console.log(file);
+        // console.log(file);
         callback(null,file.fieldname + "-" + Date.now()+" "+path.extname(file.originalname))
     }
 })
@@ -85,23 +85,30 @@ app.post('/calculator', (req, resp) => {
 })
 
 app.post('/multer',upload.single('file'),(req,res)=>{
+    console.log(req.file);
     res.send("Hello World 111 File Uploaded Successfully");
 })
 
 app.use(fileupload());
 
 app.post('/fileUpload',(req,res)=>{
-    console.log(req.files);
+    // console.log(req.files);
     var file = req.files.file;
     var filename = file.name;
-    var element = JSON.parse(req.body.FormData);
-    element.file = filename;
+    var element = req.body.FormData;
+    let datum =[];
+    element.forEach((data)=>{
+        let dat = JSON.parse(data);
+        dat.file = filename;
+        datum.push(dat)
+    })
+    console.log(datum);
     file.mv('./uploads/'+filename,(err)=>{
         if(err){
             res.send("Error Occured");
         }else{
             console.log(`\n\n`);
-            console.log(element);
+            // console.log(element);
             console.log(`\n\n`);
             res.send("File Uploaded Successfully");
         }
