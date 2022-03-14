@@ -5,7 +5,7 @@ int totalChocolates(int chocolates,int wrap){
     if(chocolates<wrap){
         return 0;
     }else{
-    int totalChoc = wrap/3;
+    int totalChoc = chocolates/wrap;
     return totalChoc + totalChocolates(totalChoc,chocolates%wrap);
     }
 
