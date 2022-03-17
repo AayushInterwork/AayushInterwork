@@ -1,0 +1,9 @@
+{"level":"info","message":"I am coming from logger console","timestamp":"2022-03-17T09:05:18.984Z"}
+{"level":"info","message":"I am coming from logger console","timestamp":"2022-03-17T09:05:19.045Z"}
+{"level":"info","message":"I am coming from logger console","timestamp":"2022-03-17T09:05:30.113Z"}
+{"level":"info","message":"I am coming from logger console","timestamp":"2022-03-17T09:05:30.293Z"}
+{"level":"info","message":"I am coming from logger console","timestamp":"2022-03-17T09:05:30.464Z"}
+{"level":"info","message":"I am coming from logger console","timestamp":"2022-03-17T09:05:30.636Z"}
+{"level":"info","message":"I am coming from logger console","timestamp":"2022-03-17T09:05:30.792Z"}
+{"level":"info","message":"I am coming from logger console","timestamp":"2022-03-17T09:34:47.363Z"}
+{"level":"error","message":"I am coming from mongodb logger console","timestamp":"2022-03-17T09:34:47.367Z"}
