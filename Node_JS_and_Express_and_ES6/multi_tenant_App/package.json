@@ -2,20 +2,17 @@
   "name": "multi_tenant_app",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch src --exec babel-node src"
+    "start": "node src/index.js"
   },
   "author": "aayush joshi",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.2",
-    "dotenv": "^16.0.0",
-    "knex": "^1.0.4",
-    "pg": "^8.7.3"
-  },
-  "devDependencies": {
-    "@babel/node": "^7.16.8"
+    "express": "^4.17.3",
+    "mongodb": "^4.4.1",
+    "mongoose": "^6.2.7",
+    "nodemon": "^2.0.15"
   }
 }
