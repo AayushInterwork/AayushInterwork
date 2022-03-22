@@ -6,6 +6,70 @@ app.use(express.json());
 const multer = require('multer');
 const path = require('path');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 2 Level Routing 
+
+
+
+const router = require('./routes/newRoute');
+
+app.use('/api/v1/test/',router);
+
+
+// 2 Level Routing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const fileupload = require('express-fileupload');
 
 var storage = multer.diskStorage({
