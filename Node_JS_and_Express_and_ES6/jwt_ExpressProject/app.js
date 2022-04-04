@@ -3,17 +3,34 @@ const app = express();
 var bcrypt = require("bcryptjs");
 const { MongoClient } = require('mongodb');
 const bodyParser = require("body-parser");
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
+app.use(cookieParser());
 
 const uri = "mongodb://localhost:27017";
 
 
 const client = new MongoClient(uri);
 
-app.get('/', (req, res) => {
+const createToken = async () =>{
+const token = await jwt.sign({_id:this._id},'secretkeyIamAayushJoshiAndThisIsMySecretKeyGeneratingToken');
+    // console.log(token);
+    const tokenVer = await jwt.verify(token,'secretkeyIamAayushJoshiAndThisIsMySecretKeyGeneratingToken')
+    // console.log(tokenVer);
+    return token;
+}
+
+
+app.get('/', async (req, res) => {
+console.log(await createToken());
+    // console.log(req.cookies);
+    const token = req.header('x-auth-token');
+    var decoded = jwt.decode(token, "secretkeyIamAayushJoshiAndThisIsMySecretKeyGeneratingToken" );
+    console.log(decoded);
     res.send("Hello World");
 })
 
@@ -37,11 +54,11 @@ app.post('/signupSuperAdmin', async (req, res) => {
     // logger.info(JSON.stringify(signUpForm));
     console.log(signUpForm);
     var userID = getUserID();
-    // var token = jwt.sign({ email: signUpForm.email }, process.env.SECRET, {
-    //     expiresIn: 86400, // expires in 24 hrs
-    // });
+    var token = jwt.sign({ email: signUpForm.email }, "secretkeyIamAayushJoshiAndThisIsMySecretKeyGeneratingToken", {
+        expiresIn: 86400, // expires in 24 hrs
+    });
     // logger.info(JSON.stringify(userID));
-
+    console.log(req.cookies);
 
     // var domain = signUpForm.email.substring(signUpForm.email.lastIndexOf("@") +1);
     // console.log(domain);
@@ -88,10 +105,12 @@ app.post('/signupSuperAdmin', async (req, res) => {
         userID: userID,
         adminID: signUpForm.adminID,
         verified: false,
-        tenantId: tenantId.tenantId
+        tenantId: tenantId.tenantId,
+        token:token,
     };
 
     console.log(userID);
+    console.log(req.cookies);
 
     // Checking database if the user already exists else insert
     client.db("MIS_OLD").collection("user").findOne(
