@@ -56,7 +56,14 @@ app.post('/signupSuperAdmin', async (req, res) => {
     }
 
     var tenantCreated = await client.db("MIS_OLD").collection("tenant").insertOne(tenantObj);
+    
+    // .then((status)=>{
 
+    // })
+
+    // tenantCreated.then((status)=>{
+
+    // })
 
 
     if (tenantCreated.insertedId) {
